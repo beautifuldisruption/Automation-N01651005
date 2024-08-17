@@ -1,0 +1,41 @@
+---
+- name: Ensure Python is installed
+  raw: sudo yum install -y python3
+  become: yes
+
+- name: Install Apache
+  yum:
+    name: httpd
+    state: present
+  become: yes
+
+- name: Create vm1.html with FQDN
+  copy:
+    content: "{{ ansible_fqdn }}"
+    dest: /var/www/html/vm1.html
+    mode: '0444'
+  become: yes
+  when: ansible_hostname == "n01651005-linux-vm1"
+
+- name: Create vm2.html with FQDN
+  copy:
+    content: "{{ ansible_fqdn }}"
+    dest: /var/www/html/vm2.html
+    mode: '0444'
+  become: yes
+  when: ansible_hostname == "n01651005-linux-vm2"
+
+- name: Create vm3.html with FQDN
+  copy:
+    content: "{{ ansible_fqdn }}"
+    dest: /var/www/html/vm3.html
+    mode: '0444'
+  become: yes
+  when: ansible_hostname == "n01651005-linux-vm3"
+
+- name: Ensure Apache is started
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  become: yes

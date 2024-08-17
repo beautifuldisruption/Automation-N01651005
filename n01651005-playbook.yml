@@ -1,0 +1,9 @@
+---
+- name: Configure Linux servers
+  hosts: linux
+  become: yes
+  roles:
+    - profile-n01651005
+    - user-n01651005
+    - datadisk-n01651005
+    - webserver-n01651005
